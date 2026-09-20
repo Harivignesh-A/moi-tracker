@@ -89,7 +89,17 @@
   </main>
 
   <!-- Load our code first so Google's onload callbacks already exist. -->
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- Select2 -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+  <!-- Our code -->
   <script src="app.js"></script>
+
+  <!-- Google APIs -->
   <script src="https://apis.google.com/js/api.js?onload=gapiLoaded"></script>
   <script src="https://accounts.google.com/gsi/client" async defer onload="gisLoaded()"></script>
 </body>
