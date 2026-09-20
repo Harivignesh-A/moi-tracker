@@ -153,6 +153,7 @@ function formatCurrency(amount) {
 
 function populatePeople() {
   const select = $("personSelect");
+
   select.innerHTML = '<option value="">Select a person…</option>';
 
   for (const name of people) {
@@ -161,6 +162,40 @@ function populatePeople() {
     option.textContent = name;
     select.appendChild(option);
   }
+
+  if ($(select).hasClass("select2-hidden-accessible")) {
+    $(select).select2("destroy");
+  }
+
+  $(select).select2({
+    placeholder: "Search person...",
+    allowClear: true,
+    width: "100%",
+    matcher: function (params, data) {
+
+      if (!params.term || params.term.trim() === "") {
+        return data;
+      }
+
+      const search = params.term.toLowerCase();
+      const text = (data.text || "").toLowerCase();
+
+      return text.includes(search) ? data : null;
+    }
+  });
+
+  $(select).off("change.select2");
+
+  $(select).on("change.select2", function () {
+    const value = this.value;
+
+    if (value) {
+      showPerson(value);
+    } else {
+      $("result").classList.add("hidden");
+      $("emptyState").classList.remove("hidden");
+    }
+  });
 }
 
 function showPerson(name) {
