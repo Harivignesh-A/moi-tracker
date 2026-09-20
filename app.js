@@ -167,22 +167,26 @@ function populatePeople() {
     $(select).select2("destroy");
   }
 
-  $(select).select2({
-    placeholder: "Search person...",
-    allowClear: true,
-    width: "100%",
-    matcher: function (params, data) {
-
-      if (!params.term || params.term.trim() === "") {
-        return data;
-      }
-
-      const search = params.term.toLowerCase();
-      const text = (data.text || "").toLowerCase();
-
-      return text.includes(search) ? data : null;
+$(select).select2({
+  placeholder: "Search person...",
+  allowClear: true,
+  width: "100%",
+  matcher: function (params, data) {
+    if (!params.term || params.term.trim() === "") {
+      return data;
     }
-  });
+
+    const search = params.term
+      .toLowerCase()
+      .replace(/\s+/g, "");
+
+    const text = String(data.text || "")
+      .toLowerCase()
+      .replace(/\s+/g, "");
+
+    return text.includes(search) ? data : null;
+  }
+});
 
   $(select).off("change.select2");
 
