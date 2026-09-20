@@ -3,9 +3,9 @@
 // Replace these 3 values before publishing.
 // ============================================================
 const CONFIG = {
-  CLIENT_ID: "PASTE_YOUR_OAUTH_CLIENT_ID_HERE",
-  API_KEY: "PASTE_YOUR_API_KEY_HERE",
-  SPREADSHEET_ID: "PASTE_YOUR_SPREADSHEET_ID_HERE"
+  CLIENT_ID: "223810672461-ktu1aq6302819ng697693s1r4jcge8gu.apps.googleusercontent.com",
+  API_KEY: "AIzaSyApV1mu070FOxKKwjatPv1L9uG7TgmXSXQ",
+  SPREADSHEET_ID: "1nJVGAOyl-1o9pbYW_-Mji2zMNpyFzUKUupyKBSQc_eU"
 };
 
 const DISCOVERY_DOC = "https://sheets.googleapis.com/$discovery/rest?version=v4";
