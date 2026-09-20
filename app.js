@@ -163,30 +163,45 @@ function populatePeople() {
     select.appendChild(option);
   }
 
-  if ($(select).hasClass("select2-hidden-accessible")) {
-    $(select).select2("destroy");
+  // Use jQuery explicitly instead of your custom $() function
+  if (window.jQuery && jQuery(select).hasClass("select2-hidden-accessible")) {
+    jQuery(select).select2("destroy");
   }
 
-$(select).select2({
-  placeholder: "Search person...",
-  allowClear: true,
-  width: "100%",
-  matcher: function (params, data) {
-    if (!params.term || params.term.trim() === "") {
-      return data;
+  jQuery(select).select2({
+    placeholder: "Search person...",
+    allowClear: true,
+    width: "100%",
+    matcher: function (params, data) {
+      if (!params.term || params.term.trim() === "") {
+        return data;
+      }
+
+      const search = params.term
+        .trim()
+        .toLowerCase();
+
+      const text = String(data.text || "")
+        .toLowerCase();
+
+      // Search anywhere within the name
+      return text.includes(search) ? data : null;
     }
+  });
 
-    const search = params.term
-      .toLowerCase()
-      .replace(/\s+/g, "");
+  jQuery(select).off("change.select2");
 
-    const text = String(data.text || "")
-      .toLowerCase()
-      .replace(/\s+/g, "");
+  jQuery(select).on("change.select2", function () {
+    const value = this.value;
 
-    return text.includes(search) ? data : null;
-  }
-});
+    if (value) {
+      showPerson(value);
+    } else {
+      $("result").classList.add("hidden");
+      $("emptyState").classList.remove("hidden");
+    }
+  });
+}
 
   $(select).off("change.select2");
 
