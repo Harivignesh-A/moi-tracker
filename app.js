@@ -163,49 +163,26 @@ function populatePeople() {
     select.appendChild(option);
   }
 
-  // Use jQuery explicitly instead of your custom $() function
-  if (window.jQuery && jQuery(select).hasClass("select2-hidden-accessible")) {
-    jQuery(select).select2("destroy");
-  }
-
-  jQuery(select).select2({
+  // Initialize Select2
+  $(select).select2({
     placeholder: "Search person...",
     allowClear: true,
     width: "100%",
+
+    // Search anywhere within the person's name
     matcher: function (params, data) {
       if (!params.term || params.term.trim() === "") {
         return data;
       }
 
-      const search = params.term
-        .trim()
-        .toLowerCase();
+      const search = params.term.trim().toLowerCase();
+      const text = String(data.text || "").toLowerCase();
 
-      const text = String(data.text || "")
-        .toLowerCase();
-
-      // Search anywhere within the name
       return text.includes(search) ? data : null;
     }
   });
 
-  jQuery(select).off("change.select2");
-
-  jQuery(select).on("change.select2", function () {
-    const value = this.value;
-
-    if (value) {
-      showPerson(value);
-    } else {
-      $("result").classList.add("hidden");
-      $("emptyState").classList.remove("hidden");
-    }
-  });
-}
-
-  $(select).off("change.select2");
-
-  $(select).on("change.select2", function () {
+  $(select).on("change", function () {
     const value = this.value;
 
     if (value) {
